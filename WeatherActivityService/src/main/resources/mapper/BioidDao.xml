@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="le.ac.uk.mapper.BioidDao">
+  <resultMap id="BaseResultMap" type="le.ac.uk.entity.Bioid">
+    <id column="code" jdbcType="VARCHAR" property="code" />
+    <result column="used" jdbcType="INTEGER" property="used" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    code, used
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bioid
+    where code = #{code,jdbcType=VARCHAR}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from bioid
+    where code = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertBioid" keyColumn="code" keyProperty="code" parameterType="le.ac.uk.entity.Bioid" useGeneratedKeys="true">
+    insert into bioid (used)
+    values (#{used,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="code" keyProperty="code" parameterType="le.ac.uk.entity.Bioid" useGeneratedKeys="true">
+    insert into bioid
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="used != null">
+        used,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="used != null">
+        #{used,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="le.ac.uk.entity.Bioid">
+    update bioid
+    <set>
+      <if test="used != null">
+        used = #{used,jdbcType=INTEGER},
+      </if>
+    </set>
+    where code = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="le.ac.uk.entity.Bioid">
+    update bioid
+    set used = #{used,jdbcType=INTEGER}
+    where code = #{code,jdbcType=VARCHAR}
+  </update>
+</mapper>
