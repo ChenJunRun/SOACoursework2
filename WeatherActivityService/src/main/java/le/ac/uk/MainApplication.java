@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 @Slf4j
 @MapperScan("le.ac.uk.mapper")
 @SpringBootApplication(scanBasePackages = {"le.ac.uk"},
-        exclude={DataSourceAutoConfiguration.class, DruidDataSourceAutoConfigure.class})public class MainApplication {
+        exclude={DataSourceAutoConfiguration.class})public class MainApplication {
     public static void main(String[] args) {
         SpringApplication.run(MainApplication.class, args);
         log.info("MainApplication start success");
