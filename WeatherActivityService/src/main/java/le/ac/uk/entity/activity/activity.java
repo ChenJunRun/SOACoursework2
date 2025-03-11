@@ -1,4 +1,4 @@
-package le.ac.uk.entity;
+package le.ac.uk.entity.activity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -12,12 +12,13 @@ import java.util.UUID;
 @TableName("activity")
 public class activity implements Serializable {
 
-    @TableId(type = IdType.ASSIGN_UUID)
-    private UUID id;
+    @TableId
+    private int             activityID;
 
-    private String activityName;
-    private activityType activityType;
-    private String activityPrice;
-    private String weatherConstraintId;
+    private int             cityID;
+    private String          activityName;
+    private activityType    activityType;
+    private int             activitySlots;
+    private int             activityPrice;
 
 }

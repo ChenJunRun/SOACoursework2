@@ -1,6 +1,6 @@
 package le.ac.uk.controller;
 
-import le.ac.uk.entity.activity;
+import le.ac.uk.mapper.activityDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class activityController {
 
     @Autowired
-    private activity activity;
+    private activityDAO activity;
 
     @GetMapping("/")
-    protected activity getActivity() {
+    protected activityDAO getActivity() {
         return activity;
     }
 }

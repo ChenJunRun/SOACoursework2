@@ -1,4 +1,4 @@
-package le.ac.uk.entity;
+package le.ac.uk.entity.activity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -7,12 +7,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-@Data
-@TableName("weatherConstraints")
 public class weatherConstraints implements Serializable {
-
-    @TableId(type = IdType.INPUT)
-    private String id;
 
     private double minTemperature;
     private double maxTemperature;
