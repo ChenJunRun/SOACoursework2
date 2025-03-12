@@ -1,0 +1,22 @@
+/* body{
+    background-color: aliceblue;
+}
+.error-message{
+    color: red;
+}
+.error{
+    color: red;
+} */
+
+body {
+    margin: 0;
+    background-color: #ecfab6;
+}
+/* Scroll to Top */
+#scroll-to-top {
+    cursor: pointer;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+}
