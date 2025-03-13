@@ -9,16 +9,22 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Data
-@TableName("activity")
+//@TableName("activity")
 public class activity implements Serializable {
 
-    @TableId
+    //    @TableId
     private int             activityID;
 
-    private int             cityID;
+    //    private int             cityID;
     private String          activityName;
-    private activityType    activityType;
+    private int             activityType;
     private int             activitySlots;
     private int             activityPrice;
+    private String          postcode;
+    private double          latitude;
+    private double          longitude;
+    private String          town;
+    private String          region;
+    private String          country;
 
 }
