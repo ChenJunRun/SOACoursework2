@@ -1,12 +1,13 @@
 package le.ac.uk.controller;
 
-import le.ac.uk.model.City;
 import le.ac.uk.repository.CityRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/city")
@@ -17,9 +18,16 @@ public class CityController {
     public CityController(CityRepository cityRepository) {
         this.cityRepository = cityRepository;
     }
-    @GetMapping("/list")
-    public List<Object[]> getGroupedCityList() {
-        return cityRepository.getCityList(); // Returns grouped data as Object[] arrays
+
+    @GetMapping
+    public Map<String, Object> getCities() {
+        // Fetch city list from repository
+        List<Object[]> cityList = cityRepository.getCityList(); // Fetch grouped data
+
+        // Prepare the JSON response
+        Map<String, Object> response = new HashMap<>();
+        response.put("cities", cityList);
+
+        return response; // Return as JSON automatically
     }
 }
-
