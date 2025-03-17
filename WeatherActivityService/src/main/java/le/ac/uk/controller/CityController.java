@@ -19,7 +19,7 @@ public class CityController {
         this.cityRepository = cityRepository;
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public Map<String, Object> getCities() {
         // Fetch city list from repository
         List<Object[]> cityList = cityRepository.getCityList(); // Fetch grouped data

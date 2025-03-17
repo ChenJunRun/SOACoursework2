@@ -1,8 +1,11 @@
 package le.ac.uk.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import le.ac.uk.entity.activity.activity;
 import le.ac.uk.model.Route;
-import le.ac.uk.repository.ActivityRepository;
+import le.ac.uk.service.IActivityService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 //@RestController
@@ -27,60 +30,80 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+@Controller
 @RequestMapping("/suggestions")
 public class ActivitySuggestionController {
+
+    @PostMapping
+    public String loadActivityPage(@RequestParam("city_list") String town, Model model) {
+        model.addAttribute("town",town);
+        return "activity";
+    }
 
     @Autowired
     private WeatherController weatherController;
 
     @Autowired
-    private ActivityRepository activityRepository;
-
-    @Autowired
     private RouteController routeController;
 
-    @PostMapping()
-    public Object getActivity(@RequestParam("city_list") String city) throws JsonProcessingException {
+    @Autowired
+    private IActivityService activityService;
+
+
+    @GetMapping ("/list")
+    @ResponseBody
+    public Object getActivity(@RequestParam("town") String town) throws JsonProcessingException {
+
+        String city=town.split(",")[0];
+        String region=town.split(",")[1];
 
         Weather weather = weatherController.getWeather(city);
         boolean isSuitableForOutdoor = weatherController.checkWeather(weather);
 
         // Fetch activities based on suitability
-        List<Object[]> activities = activityRepository.findByActivityType(city, isSuitableForOutdoor ? 1 : 0);
+        List<activity> activities = activityService.selectActivityByRegionAndType(city, isSuitableForOutdoor ? 1 : 0);
 
         // Prepare JSON response
         Map<String, Object> response = new HashMap<>();
         response.put("city", city);
+        response.put("cityregion", region);
         response.put("weather", weather);
-        response.put("isSuitableForOutdoor", isSuitableForOutdoor);
 
-        // Convert activities into a JSON-friendly format
-        List<Map<String, Object>> activityList = new ArrayList<>();
-        for (Object[] activity : activities) {
-            Map<String, Object> activityMap = new HashMap<>();
-            activityMap.put("activityName", activity[0]);
-            activityMap.put("activityType", activity[1]);
-            activityMap.put("activitySolts", activity[2]);
-            activityMap.put("activityPrice", activity[3]);
-            activityMap.put("ActivityTown", activity[4]);
-            activityMap.put("ActivityRegion", activity[5]);
-            activityMap.put("ActivityLocationLatitude", activity[6]);
-            activityMap.put("ActivityLocationLongitude", activity[7]);
-            activityMap.put("ActivityLocationPostcode", activity[8]);
+        try{
+            if(!activities.isEmpty()) {
+                // Convert activities into a JSON-friendly format
+                List<Map<String, Object>> activityList = new ArrayList<>();
+                for (activity a : activities) {
+                    Map<String, Object> activityMap = new HashMap<>();
+                    activityMap.put("id", a.getId());
+                    activityMap.put("activityName", a.getName());
+                    activityMap.put("activityType", a.getType());
+                    activityMap.put("activitySlots", a.getSlots());
+                    activityMap.put("activityPrice", a.getPrice());
+                    activityMap.put("ActivityTown", a.getTown());
+                    activityMap.put("ActivityRegion", a.getRegion());
+                    activityMap.put("ActivityLocationLatitude", a.getLatitude());
+                    activityMap.put("ActivityLocationLongitude", a.getLongitude());
+                    activityMap.put("ActivityLocationPostcode", a.getPostcode());
 
-            activityMap.put("id",activity[9]);
 
-            Route route = routeController.getRouteInfo((double)activity[6],(double)activity[7]);  // lat,long
-            activityMap.put("ActivityRouteDistance", route.getDistance());
-//            System.out.println("Distance is : "+route.getDistance());
-            activityMap.put("ActivityRouteTime", route.getEstimatedTime());
+                    // Fetch route information
+                    Route route = routeController.getRouteInfo(a.getLatitude(), a.getLongitude());
+                    activityMap.put("ActivityRouteDistance", route.getDistance());
+                    activityMap.put("ActivityRouteTime", route.getEstimatedTime());
 
-            // Add other activity fields as necessary
-            activityList.add(activityMap);
+                    // Add other activity fields as necessary
+                    activityList.add(activityMap);
+                    response.put("activities", activityList);
+                }
+            }
+        }
+        catch(Exception e){
+            response.put("activities",null);
+            response.put("message","Acivities are not available.");
         }
 
-        response.put("activities", activityList);
+
 
         return response; // Return JSON response
 

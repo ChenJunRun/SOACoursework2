@@ -3,12 +3,12 @@
 <mapper namespace="le.ac.uk.mapper.activityDAO">
     <select id="getActivityByCityAndType" resultType="le.ac.uk.entity.activity.activity">
         SELECT
-            a.activityID
+            a.id
              , a.cityID
-             , a.activityName
-             , a.activityType
-             , a.activitySlots
-             , a.activityPrice
+             , a.name
+             , a.type
+             , a.slots
+             , a.price
              , c.postcode
              , c.latitude
              , c.longitude
@@ -21,6 +21,6 @@
                           ON a.cityID = c.id
         WHERE 1=1
           AND c.region = #{region}
-          AND a.activityType = #{activityType}
+          AND a.type = #{activityType}
     </select>
 </mapper>

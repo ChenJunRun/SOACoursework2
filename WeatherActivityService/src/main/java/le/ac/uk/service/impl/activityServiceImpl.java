@@ -1,13 +1,11 @@
 package le.ac.uk.service.impl;
 
 import le.ac.uk.entity.activity.activity;
-import le.ac.uk.entity.activity.activityType;
 import le.ac.uk.mapper.activityDAO;
 import le.ac.uk.service.IActivityService;
 import le.ac.uk.service.support.baseServiceImpl;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -24,4 +22,5 @@ public class activityServiceImpl extends baseServiceImpl<activityDAO, activity>
 
         return activityList;
     }
+
 }

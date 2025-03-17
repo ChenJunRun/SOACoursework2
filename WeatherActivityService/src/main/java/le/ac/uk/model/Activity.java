@@ -12,7 +12,7 @@ public class Activity {
     private int cityID;
     private String name;
     private int type;
-    private String slots;
+    private int slots;
     private double price;
 
     public int getId() {
@@ -47,11 +47,11 @@ public class Activity {
         this.type = type;
     }
 
-    public String getSlots() {
+    public int getSlots() {
         return slots;
     }
 
-    public void setSlots(String slots) {
+    public void setSlots(int slots) {
         this.slots = slots;
     }
 

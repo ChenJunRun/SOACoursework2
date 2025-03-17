@@ -13,13 +13,13 @@ import java.util.UUID;
 public class activity implements Serializable {
 
     //    @TableId
-    private int             activityID;
+    private int             id;
 
     //    private int             cityID;
-    private String          activityName;
-    private int             activityType;
-    private int             activitySlots;
-    private int             activityPrice;
+    private String          name;
+    private int             type;
+    private int             slots;
+    private int             price;
     private String          postcode;
     private double          latitude;
     private double          longitude;

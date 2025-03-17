@@ -40,7 +40,7 @@
                             <div class="row">
 
 
-                                <button type="submit" onclick='window.location.href="/home/mybookings/"'
+                                <button type="submit" onclick='window.location.href="/mybookings"'
                                         class="btn btn-secondary btn-block btn-lg gradient-custom-4 text-body">
                                     My Bookings
                                 </button>
@@ -145,14 +145,14 @@
 
         $.ajax({
             type: "GET",
-            url: '/city',
+            url: '/city/list',
             dataType: 'json',
             success: function (response) {
                     let select = $("#city_list");
                     select.empty(); // Clear existing options
                     select.append('<option value="">Select region</option>');
                     response.cities.forEach(function(city) {
-                        select.append('<option value="' + city[0] + '">' + city[0]+","+city[1]+ '</option>');
+                        select.append('<option value="' +  city[0]+","+city[1] + '">' + city[0]+","+city[1]+ '</option>');
                     });
             }
         });
