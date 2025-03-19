@@ -1,5 +1,6 @@
 package le.ac.uk;
 
+import com.alibaba.druid.spring.boot3.autoconfigure.DruidDataSourceAutoConfigure;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -9,8 +10,8 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 @Slf4j
 @MapperScan("le.ac.uk.mapper")
-@SpringBootApplication(scanBasePackages = {"le.ac.uk"},exclude={DataSourceAutoConfiguration.class})
-public class MainApplication {
+@SpringBootApplication(scanBasePackages = {"le.ac.uk"},
+        exclude={DataSourceAutoConfiguration.class})public class MainApplication {
     public static void main(String[] args) {
         SpringApplication.run(MainApplication.class, args);
         log.info("MainApplication start success");
