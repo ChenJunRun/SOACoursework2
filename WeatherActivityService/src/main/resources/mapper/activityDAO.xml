@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="le.ac.uk.mapper.activityDAO">
+    <select id="getActivityByCityAndType" resultType="le.ac.uk.entity.activity.activity">
+        SELECT
+            a.id
+             , a.cityID
+             , a.name
+             , a.type
+             , a.slots
+             , a.price
+             , c.postcode
+             , c.latitude
+             , c.longitude
+             , c.town
+             , c.region
+             , c.country
+        FROM
+            activity a
+                LEFT JOIN city c
+                          ON a.cityID = c.id
+        WHERE 1=1
+          AND c.region = #{region}
+          AND a.type = #{activityType}
+    </select>
+</mapper>
