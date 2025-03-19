@@ -6,6 +6,7 @@ import le.ac.uk.service.IActivityService;
 import le.ac.uk.service.support.baseServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,9 +18,11 @@ public class activityServiceImpl extends baseServiceImpl<activityDAO, activity>
     public List<activity> selectActivityByRegionAndType(String region, int activityType) {
         List<activity> activityList = baseMapper.getActivityByCityAndType(region, activityType);
         if (activityList == null || activityList.isEmpty()) {
-            return null;
+            activity messageActivity = new activity();
+            messageActivity.setName("No activities are found");
+            activityList = new ArrayList<>();
+            activityList.add(messageActivity);
         }
-
         return activityList;
     }
 
